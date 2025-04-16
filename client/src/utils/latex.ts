@@ -79,7 +79,7 @@ export function preprocessLaTeX(content: string): string {
 }
 
 export function escapeBrackets(text: string): string {
-  const pattern = /(```[\S\s]*?```|`.*?`)|\\\[([\S\s]*?[^\\])\\]|\\\((.*?)\\\)/g;
+  const pattern = /(```[\S\s]*?```|`.*?`)|\\\[(?:\n)*([\S\s]*?[^\\])(?:\n)*\\\]|\\\((.*?)\\\)/g;
   return text.replace(
     pattern,
     (
@@ -91,7 +91,7 @@ export function escapeBrackets(text: string): string {
       if (codeBlock != null) {
         return codeBlock;
       } else if (squareBracket != null) {
-        return `$$${squareBracket}$$`;
+        return `$$\n${squareBracket}\n$$`;
       } else if (roundBracket != null) {
         return `$${roundBracket}$`;
       }
